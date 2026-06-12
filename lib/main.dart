@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/auth/auth_page.dart';
-import 'package:flutter_application_1/firebase_options.dart';
-import 'package:intl/date_symbol_data_local.dart'; 
+import 'firebase_options.dart';
+import 'pages/home_page.dart';
 
 void main() async {
+  // 1. Wajib tambahkan ini jika ada proses async sebelum runApp
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   
-  // Tambahkan ini agar fungsi penanggalan intl aktif di aplikasi
-  await initializeDateFormatting('id_ID', null); 
-  
+  // 2. Inisialisasi Firebase dengan opsi multiplatform (termasuk Web)
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print("Firebase inisialisasi error: $e");
+  }
+
   runApp(const MyApp());
 }
 
@@ -22,13 +25,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Authentication',
+      debugShowCheckedModeBanner: false,
+      title: 'Aplikasi Pertemuan',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
         useMaterial3: true,
       ),
-      home: const AuthPage(),
-      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
     );
   }
 }
