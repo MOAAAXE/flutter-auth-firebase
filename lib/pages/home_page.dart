@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/auth/auth_page.dart';
-import '../list_page.dart';
+// Import file pertemuan10.dart agar bisa membaca Katalog Produk
+import '../pertemuan10.dart' as p10; 
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,10 +11,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: const Color(0xff673ab7), // Menyesuaikan warna ungu di gambar kamu
+        title: const Text('Dashboard', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xff673ab7), 
         actions: [
-          // OPTION MENU (Sesuai Gambar 1)
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
             onSelected: (value) async {
@@ -93,18 +93,71 @@ class HomePage extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
               'Daftar Pertemuan',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xff673ab7)),
             ),
           ),
-          // List Pertemuan Halaman
-          Expanded(
+          // List Pertemuan Halaman (1 - 10)
+          const Expanded(
             child: ListPertemuanPage(),
           ),
         ],
       ),
+    );
+  }
+}
+
+// ==========================================
+// COMPONENT LIST PERTEMUAN (1 Sampai 10)
+// ==========================================
+class ListPertemuanPage extends StatelessWidget {
+  const ListPertemuanPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Generate otomatis list 'Pertemuan 1' sampai 'Pertemuan 10'
+    final List<String> daftarPertemuan = List.generate(10, (index) => 'Pertemuan ${index + 1}');
+
+    return ListView.builder(
+      itemCount: daftarPertemuan.length,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      itemBuilder: (context, index) {
+        final title = daftarPertemuan[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          color: const Color(0xfff5f5f5),
+          elevation: 0,
+          child: ListTile(
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xffe1dee9),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.grid_view_rounded, color: Color(0xff673ab7)),
+            ),
+            title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: const Text('Materi Kuliah'),
+            trailing: const Icon(Icons.chevron_right, color: Color(0xff673ab7)),
+            onTap: () {
+              if (title == 'Pertemuan 10') {
+                // Ketika Pertemuan 10 diklik, arahkan ke Katalog Produk di pertemuan10.dart
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const p10.HomePage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Halaman $title belum diimplementasikan')),
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -4,16 +4,19 @@ import 'firebase_options.dart';
 import 'pages/home_page.dart';
 
 void main() async {
-  // 1. Wajib tambahkan ini jika ada proses async sebelum runApp
+  // 1. Pastikan binding Flutter selesai diinisialisasi
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // 2. Inisialisasi Firebase dengan opsi multiplatform (termasuk Web)
+
   try {
+    // 2. Inisialisasi Firebase dengan proteksi try-catch
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    
+
+    debugPrint("Firebase berhasil terkoneksi!");
   } catch (e) {
-    print("Firebase inisialisasi error: $e");
+    debugPrint("Gagal inisialisasi Firebase: $e");
   }
 
   runApp(const MyApp());
@@ -25,13 +28,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Aplikasi Pertemuan',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      // Tambahkan properti home di bawah ini
+      home: const HomePage(), 
     );
   }
 }

@@ -7,6 +7,7 @@ import 'pertemuan6.dart';
 import 'pertemuan7.dart';
 import 'pertemuan8.dart';
 import 'pertemuan9.dart';
+import 'pertemuan10.dart';
 
 class ListPertemuanPage extends StatelessWidget {
   const ListPertemuanPage({super.key});
@@ -21,6 +22,7 @@ class ListPertemuanPage extends StatelessWidget {
     "Pertemuan 7",
     "Pertemuan 8",
     "Pertemuan 9",
+    "Pertemuan 10",
   ];
 
   Widget _getPage(int index) {
@@ -34,6 +36,7 @@ class ListPertemuanPage extends StatelessWidget {
       case 6: return const RadiobuttonPage();
       case 7: return AutocompletespinPage();
       case 8: return Pertemuan9Page();
+      case 9: return AddProductScreen();
       default: return DetailPage(judul: "Halaman Tidak Ditemukan");
     }
   }
